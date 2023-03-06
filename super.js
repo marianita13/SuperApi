@@ -1,5 +1,6 @@
 const url="https://www.superheroapi.com/api.php/10220996770587654/search/"
 var contenido=''
+var contenido2=''
 let poderes2=[]
 
 async function encontrar(){
@@ -13,21 +14,29 @@ async function encontrar(){
     }else if (datos.response=='error'){
         alert('Ese superheroe no existe')
     }else{
-        let imagen=datos.results[0].image.url
-        let names=datos.results[0].name
-        let fullName=datos.results[0].biography["full-name"]
-        let poderes=datos.results[0].powerstats
-        console.log(poderes);
+        for (i=0;i<datos.results["length"];i++){
+        let imagen=datos.results[i].image.url
+        let names=datos.results[i].name
+        let fullName=datos.results[i].biography["full-name"]
+        let poderes=datos.results[i].powerstats
         contenido+=`<table>`
         contenido+=`<tr><td>Character Name</td><td>${names}</td></tr>`
         contenido+=`<tr><td>Origin Name</td><td>${fullName}</td></tr>`
-        for(i=0;i<6;i++){
-            console.log(poderes[i]);
-            contenido+=`<tr><td>Poderes</td><td>${poderes[i]}</td></tr>`
-        }
+        contenido+=`</table>`
+        contenido2+=`<table><th>Poderes</th><th>Nivel</th>`
+            for(prop in poderes){
+                contenido2+=`<tr><td>${prop}</td><td>${poderes[prop]}</td></tr>`
+            }
+        contenido2+=`</table>`
         let superhero=document.getElementById('superhero')
         superhero.innerHTML=`<img src=${imagen}>
-        ${contenido}`
+        ${contenido}
+        ${contenido2}`
+
+        }
+    nombre.value=''
+    contenido=''
+    contenido2=''
     }
 
 }
